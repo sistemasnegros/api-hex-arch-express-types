@@ -23,17 +23,17 @@
 </p>
 
 - Clean Architecture by Uncle Bob.
-- The Onion Architecture.
+- Onion Architecture.
 - Separate infrastructure from business logic.
-- The inputs and outputs in border the our design.
+- Inputs and outputs in border the our design.
 
 ## Definitions
 
-- Entities: They are the objects business.
-- Interactors: They are the functions that interact with entities, business logic.
-- Repositories: They are interface operations with entities for example getbyId, getAll, save.
-- Transport Layer: Its the method the communication for example: http or SQS (Input andOutput).
-- Data Sources: They are Class that implement the functions the repositories.
+- Entities: Represent business objects.
+- Interactors: Functions that interact with entities, business logic.
+- Repositories: Interface operations with entities for example getbyId, getAll, save.
+- Transport Layer: Communication methods, for example: http or SQS (Input andOutput).
+- Data Sources: Class that implement the functions the repositories.
 
 ## Table of Contents
 
@@ -46,7 +46,7 @@
 
 ## About <a name = "about"></a>
 
-This project contains an example of hexagonal architecture
+Project contains an example of hexagonal architecture
 
 ## Tree Project <a name = "tree_project"></a>
 
