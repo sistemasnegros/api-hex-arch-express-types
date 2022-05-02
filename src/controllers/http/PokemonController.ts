@@ -6,23 +6,13 @@ const router = express.Router();
 
 router.get('/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
-  try {
-    const pokemonModel = await PokemonInteractor.getById(parseInt(id));
-    res.json(pokemonModel);
-  } catch (e) {
-    console.log(e);
-    res.status(404).json({ errors: e.message });
-  }
+  const { status, data, error } = await PokemonInteractor.getById(parseInt(id));
+  res.status(status).json({ data, error });
 });
 
 router.get('/', async (req: Request, res: Response) => {
-  try {
-    const pokemonModel = await PokemonInteractor.getAll();
-    res.json(pokemonModel);
-  } catch (e) {
-    console.log(e);
-    res.status(404).json({ errors: e.message });
-  }
+  const { status, data, error } = await PokemonInteractor.getAll();
+  res.status(status).json({ data, error });
 });
 
 export default router;

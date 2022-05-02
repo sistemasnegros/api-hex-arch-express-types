@@ -1,35 +1,40 @@
 import PokemonRepository from '../repositories/pokemonRepository';
 import PokemonEntity from '../entities/Pokemon';
+import { HTTP_STATUS } from '../const/http';
+import { IResponse } from './IResponse';
 
-class PokemonInteractor implements PokemonRepository {
+class PokemonInteractor {
   pokemonRepository: PokemonRepository;
 
   constructor(pokemonRepository: PokemonRepository) {
     this.pokemonRepository = pokemonRepository;
   }
 
-  async getById(id: number): Promise<PokemonEntity> {
+  async getById(id: number): Promise<IResponse<PokemonEntity | undefined>> {
     const pokemonModel: PokemonEntity = await this.pokemonRepository.getById(
       id,
     );
     if (!pokemonModel) {
-      throw new Error('id pokemon not found.');
+      return { status: HTTP_STATUS.NOT_FOUND, error: 'not found' };
     }
+
     const pokemon: PokemonEntity = {
       id: pokemonModel.id,
       name: pokemonModel.name,
       type: pokemonModel.type,
       image: pokemonModel.image,
     };
-    return pokemon;
+
+    return { status: HTTP_STATUS.OK, data: pokemon };
   }
 
-  async getAll(): Promise<PokemonEntity[]> {
-    const pokemonModel: PokemonEntity[] = await this.pokemonRepository.getAll();
-    if (!pokemonModel) {
-      throw new Error('Internal error.');
+  async getAll(): Promise<IResponse<PokemonEntity[]>> {
+    try {
+      const pokemonModel = await this.pokemonRepository.getAll();
+      return { status: HTTP_STATUS.OK, data: pokemonModel };
+    } catch (e) {
+      return { status: HTTP_STATUS.INTERNAL_ERROR, error: e.message };
     }
-    return pokemonModel;
   }
 }
 export default PokemonInteractor;
